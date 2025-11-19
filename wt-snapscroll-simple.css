@@ -1,0 +1,36 @@
+/* ===================================================================
+   Web-Thread SnapScroll - Core Styles
+   =================================================================== */
+
+/* * 1. Core Structural Styles
+ * These are essential for the snap-scroll functionality.
+ * They force each section to be exactly 100vh (100% of the viewport 
+ * height) and remove any default spacing that could break the effect.
+ *
+ * NOTE: !important is used to ensure these structural styles 
+ * override any conflicting theme or user styles.
+ */
+.wt-snapscroll-item {
+  padding: 0 !important;
+  margin: 0 !important;
+  height: 100vh;
+  width: 100%;
+  position: relative;
+}
+
+
+/* ===================================================================
+   Optional Demo / Helper Styles
+   =================================================================== */
+
+/*
+ * 2. Optional Content Alignment
+ * This is an optional helper. It centers the content *within* * the .wt-snapscroll-item. 
+ *
+ * Feel free to remove this or style it however you like.
+ */
+.wt-snapscroll-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}

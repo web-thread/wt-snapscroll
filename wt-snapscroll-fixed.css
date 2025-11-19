@@ -1,0 +1,100 @@
+/* ===================================================================
+   Web-Thread SnapScroll (Fixed / Pinned Version)
+   File: wt-snapscroll-fixed.css
+   =================================================================== */
+
+/*
+ * NOTE: This is an advanced alternative to 'wt-snapscroll-simple.css'.
+ * It creates a "pinned content" effect while scrolling.
+ *
+ * DO NOT use both .css files at the same time.
+ *
+ * This version requires a specific HTML structure:
+ * <article class="wt-snapscroll-item">
+ * <div class="wt-snapscroll-wrap">
+ * ... your content ...
+ * </div>
+ * </article>
+ */
+
+
+/* ===================================================================
+   1. Core Functional Styles
+   These styles are ESSENTIAL for the "pinning" effect.
+   =================================================================== */
+
+/*
+ * 1A. The Section Container (The "Spacer")
+ *
+ * This element holds the 100vh space in the document flow.
+ * It's a "dummy" container that we scroll past.
+ */
+.wt-snapscroll-item {
+  padding: 0 !important;
+  margin: 0 !important;
+  height: 100vh;
+  width: 100%;
+  position: relative; /* Required for z-index stacking */
+  z-index: 10 !important; /* Default stack level */
+}
+
+/*
+ * 1B. The Active Section
+ *
+ * The JS adds '.wt-snapscroll-active' to the section currently
+ * in the middle of the viewport.
+ * We raise its z-index so its content (when fixed) will
+ * appear *on top of* the other sections.
+ */
+.wt-snapscroll-item.wt-snapscroll-active {
+  z-index: 30 !important;
+}
+
+/*
+ * 1C. The Content Wrapper
+ *
+ * This element *inside* the .wt-snapscroll-item holds your
+ * actual content. It's set to 100vh to match its parent.
+ */
+.wt-snapscroll-wrap {
+  height: 100vh;
+  width: 100%;
+}
+
+/*
+ * 1D. The "Pinning" Effect (The Magic!)
+ *
+ * This is the core rule for the effect. It only applies when:
+ * 1. The <body> has '.wt-snapscroll-zone' (from JS).
+ * 2. We are looking at the '.wt-snapscroll-active' item.
+ *
+ * This rule yanks the *.wt-snapscroll-wrap* (the content) out
+ * of the flow and "pins" it to the viewport.
+ *
+ * The result: The *parent* (.wt-snapscroll-item) scrolls,
+ * but the *content* (.wt-snapscroll-wrap) stays fixed.
+ */
+.wt-snapscroll-zone .wt-snapscroll-item.wt-snapscroll-active .wt-snapscroll-wrap {
+  position: fixed;
+  left: 0;
+  top: 0;
+}
+
+
+/* ===================================================================
+   2. Optional Demo / Helper Styles
+   These styles are NOT required. They are just for centering.
+   =================================================================== */
+
+/*
+ * Optional alignment helper.
+ * This centers the content vertically
+ * inside the .wt-snapscroll-wrap.
+ *
+ * Feel free to remove or change this.
+ */
+.wt-snapscroll-wrap {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
