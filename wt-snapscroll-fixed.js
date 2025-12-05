@@ -2,10 +2,11 @@ window.addEventListener('load', (event) => {
 
 
   /* ===================================================
-  SECTION 1: The "Snap Zone" (Toggling .snapscroll on <body>)
+  SECTION 1: The "Snap Zone" (Toggling .snapscroll on <html>)
   =================================================== */
 
-  // 1. Find all elements with the class 'wt-snapscroll-item'
+  // 1. Select elements
+  const html = document.documentElement;
   const snapSections = document.querySelectorAll('.wt-snapscroll-item');
 
   // 2. Safety check: If no elements are found, stop here.
@@ -33,10 +34,10 @@ window.addEventListener('load', (event) => {
     //    - AND The bottom of the last element is at or below the bottom of the screen (bottom >= viewportHeight)
     const isInSnapZone = (firstTop <= 0) && (lastBottom >= viewportHeight);
 
-    // 6. Toggle the class on the <body> based on our condition
+    // 6. Toggle the class on the <html> based on our condition
     //    - If isInSnapZone is true, it ADDs the class.
     //    - If isInSnapZone is false, it REMOVEs the class.
-    document.body.classList.toggle('wt-snapscroll-zone', isInSnapZone);
+    html.classList.toggle('wt-snapscroll-zone', isInSnapZone);
   }
 
   // 7. Listen for scroll events to run our check
@@ -168,7 +169,7 @@ window.addEventListener('load', (event) => {
    */
   function handleWheel(e) {
     // 1. Check if we are NOT in the snap zone.
-    if (!document.body.classList.contains('wt-snapscroll-zone')) {
+    if (!html.classList.contains('wt-snapscroll-zone')) {
       return; // Do nothing, let the browser scroll normally.
     }
   
@@ -219,7 +220,7 @@ window.addEventListener('load', (event) => {
    */
   function handleTouchStart(e) {
     // Only record touch start if we're in the snap zone.
-    if (document.body.classList.contains('wt-snapscroll-zone')) {
+    if (html.classList.contains('wt-snapscroll-zone')) {
       touchStartY = e.touches[0].clientY;
     }
   }
@@ -229,7 +230,7 @@ window.addEventListener('load', (event) => {
    */
   function handleTouchMove(e) {
     // Exit if not in snap zone, or already jumping, or touch hasn't started.
-    if (!document.body.classList.contains('wt-snapscroll-zone') || isJumping || !touchStartY) {
+    if (!html.classList.contains('wt-snapscroll-zone') || isJumping || !touchStartY) {
       return;
     }
   
@@ -289,7 +290,6 @@ window.addEventListener('load', (event) => {
   window.addEventListener('touchstart', handleTouchStart, { passive: false });
   window.addEventListener('touchmove', handleTouchMove, { passive: false });
   window.addEventListener('touchend', handleTouchEnd);
-
 
 
 }); //  end window.addEventListener 'load'
